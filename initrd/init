@@ -52,6 +52,9 @@ fi
 # now running under a controlling tty; debug output from stderr into log file
 # boot up Android
 
+# make sure ntfs-3g has correct permissions on init
+chmod 755 /sbin/mount.ntfs-3g
+
 error()
 {
 	echo $*
