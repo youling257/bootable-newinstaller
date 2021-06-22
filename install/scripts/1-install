@@ -552,6 +552,7 @@ install_hd()
 			answer=${answer:-$(blkid | grep -v loop | sort | grep ext4 | cut -d: -f1 | head -1)}
 			[ -b "$answer" -o -b /dev/$answer ] && answer=`basename $answer` || answer=
 			AUTO_UPDATE=${answer:-$AUTO_UPDATE}
+			[ -z "$AUTO_UPDATE" ] && AUTO_INSTALL=
 			;;
 		*)
 			[ -z "$answer" ] && set_answer_if_auto Create
