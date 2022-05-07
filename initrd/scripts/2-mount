@@ -15,6 +15,7 @@ mount_data()
 		if [ -b "/dev/$blk" ]; then
 			[ ! -e /dev/block/$blk ] && ln /dev/$blk /dev/block
 			mount -o noatime /dev/block/$blk data
+			mount -o remount,ro /mnt
 		elif [ "$DATA" = "9p" ]; then
 			modprobe 9pnet_virtio
 			mount -t 9p -o trans=virtio data data -oversion=9p2000.L,posixacl,cache=loose
