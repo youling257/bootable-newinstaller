@@ -110,6 +110,7 @@ check_root()
 	elif [ -s /mnt/$SRC/system/default.prop ]; then
 		remount_rw
 		mount --bind /mnt/$SRC/system android
+		ln -s ./$SRC/system/system /mnt
 	elif [ -z "$SRC" -a -s /mnt/default.prop ]; then
 		mount --bind /mnt android
 	else
