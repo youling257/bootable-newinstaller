@@ -130,9 +130,11 @@ remount_rw()
 debug_shell()
 {
 	if [ -x system/bin/sh ]; then
-		echo Running MirBSD Korn Shell...
-		USER="($1)" system/bin/sh -l 2>&1
-		[ $? -ne 0 ] && /bin/sh 2>&1
+		if [ 0$DEBUG -gt 1 ]; then
+			echo Running MirBSD Korn Shell...
+			USER="($1)" system/bin/sh -l 2>&1
+			[ $? -ne 0 ] && /bin/sh 2>&1
+		fi
 	else
 		echo Running busybox ash...
 		busybox sh 2>&1
@@ -192,7 +194,7 @@ if [ -n "$INSTALL" -o -n "$DEBUG" ]; then
 	auto_detect &
 fi
 
-if [ 0$DEBUG -gt 0 ]; then
+if [ 0$DEBUG -gt 1 ]; then
 	echo -e "\nType 'exit' to continue booting...\n"
 	debug_shell debug-found
 fi
