@@ -101,8 +101,6 @@ check_root()
 		zcat /dev/$RAMDISK | cpio -id > /dev/null
 	elif [ -d /mnt/$SRC/ramdisk ]; then
 		cp -f -a /mnt/$SRC/ramdisk/* .
-	else
-		return 1
 	fi
 	if [ -e /mnt/$SRC/system.sfs ]; then
 		losetup /dev/loop0 /mnt/$SRC/system.sfs
@@ -121,6 +119,12 @@ check_root()
 	elif [ -s /mnt/$SRC/system/build.prop ]; then
 		remount_rw
 		mount --bind /mnt/$SRC/system system
+	elif [ -s /mnt/$SRC/system/default.prop ]; then
+		cd /
+		umount /android
+		mount --bind /mnt/$SRC/system /android
+		ln -s ./$SRC/system/system /mnt
+		cd android
 	elif [ -b "/dev/$system" ]; then
 		ln -s /dev/$system /dev/block/$system
 		mount -o ro,noatime /dev/block/$system system
