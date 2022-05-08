@@ -99,6 +99,8 @@ check_root()
 		zcat /mnt/$SRC/$RAMDISK | cpio -id > /dev/null
 	elif [ -b /dev/$RAMDISK ]; then
 		zcat /dev/$RAMDISK | cpio -id > /dev/null
+	elif [ -d /mnt/$SRC/ramdisk ]; then
+		cp -f -a /mnt/$SRC/ramdisk/* .
 	else
 		return 1
 	fi
