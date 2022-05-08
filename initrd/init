@@ -115,7 +115,7 @@ check_root()
 	elif [ -e /mnt/$SRC/system.img ]; then
 		losetup /dev/loop0 /mnt/$SRC/system.img
 		ln -s /dev/loop0 /dev/block/loop0
-		mount -o ro,noatime /dev/block/loop0 system
+		mount -o rw,noatime /dev/block/loop0 system
 	elif [ -s /mnt/$SRC/system/build.prop ]; then
 		remount_rw
 		mount --bind /mnt/$SRC/system system
@@ -127,7 +127,7 @@ check_root()
 		cd android
 	elif [ -b "/dev/$system" ]; then
 		ln -s /dev/$system /dev/block/$system
-		mount -o ro,noatime /dev/block/$system system
+		mount -o rw,noatime /dev/block/$system system
 	elif [ -z "$SRC" -a -s /mnt/build.prop ]; then
 		mount --bind /mnt system
 	else
