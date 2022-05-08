@@ -119,6 +119,9 @@ check_root()
 	elif [ -s /mnt/$SRC/system/build.prop ]; then
 		remount_rw
 		mount --bind /mnt/$SRC/system system
+	elif [ -b "/dev/$system" ]; then
+		ln -s /dev/$system /dev/block/$system
+		mount -o ro,noatime /dev/block/$system system
 	elif [ -z "$SRC" -a -s /mnt/build.prop ]; then
 		mount --bind /mnt system
 	else
