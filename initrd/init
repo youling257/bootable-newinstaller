@@ -112,10 +112,24 @@ check_root()
 			ln -s /dev/loop1 /dev/block/loop1
 			mount -o noatime /dev/block/loop1 system
 		fi
+	elif [ -e /mnt/$SRC/system_root.sfs ]; then
+		losetup /dev/loop0 /mnt/$SRC/system_root.sfs
+		ln -s /dev/loop0 /dev/block/loop0
+		cd /
+		umount /android
+		mount -o noatime /dev/block/loop0 /android
+		cd android
 	elif [ -e /mnt/$SRC/system.img ]; then
 		losetup /dev/loop0 /mnt/$SRC/system.img
 		ln -s /dev/loop0 /dev/block/loop0
 		mount -o rw,noatime /dev/block/loop0 system
+	elif [ -e /mnt/$SRC/system_root.img ]; then
+		losetup /dev/loop0 /mnt/$SRC/system_root.img
+		ln -s /dev/loop0 /dev/block/loop0
+		cd /
+		umount /android
+		mount -o rw,noatime /dev/block/loop0 /android
+		cd android
 	elif [ -s /mnt/$SRC/system/build.prop ]; then
 		remount_rw
 		mount --bind /mnt/$SRC/system system
